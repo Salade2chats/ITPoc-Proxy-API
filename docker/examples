@@ -1,0 +1,25 @@
+// Create user
+
+curl -X POST \
+  http://api.itpoc.tld/users \
+  -H 'content-type: multipart/form-data' \
+  -F email=user@email.com \
+  -F 'password=SecretPassword'
+
+
+// Create domain
+
+curl -X POST \
+  http://api.itpoc.tld/domains \
+  -H 'content-type: multipart/form-data' \
+  -F domain=itpoc.io
+
+
+// Create sub-domain
+
+curl -X POST \
+  http://api.itpoc.tld/sub-domains \
+  -H 'content-type: multipart/form-data' \
+  -F user_id=a38d1afd-6aab-4dc4-8d24-cdebe6d8023a \
+  -F domain_id=ecbce183-b181-4439-a82f-0af90a36a48f \
+  -F sub-domain=ola
