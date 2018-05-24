@@ -44,20 +44,20 @@ class DomainsController extends Controller
 
     public function postAction()
     {
-        $name = $this->request->getPost("name", null, null);
+        $domain = $this->request->getPost("domain", null, null);
 
-        $domain = (new Domains())
-            ->setName($name);
-        if ($domain->create() === false) {
+        $domains = (new Domains())
+            ->setDomain($domain);
+        if ($domains->create() === false) {
             // error, cannot create
             $this->response->setStatusCode(500);
             $data = [
                 'status' => 'error',
                 'code' => 500,
-                'message' => sprintf('Cannot create domain \'%s\'', $name),
+                'message' => sprintf('Cannot create domain \'%s\'', $domain),
                 'details' => []
             ];
-            $messages = $domain->getMessages();
+            $messages = $domains->getMessages();
             foreach ($messages as $message) {
                 $data['details'][] = $message->getMessage();
             }

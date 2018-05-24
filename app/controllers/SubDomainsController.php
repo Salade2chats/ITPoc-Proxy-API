@@ -44,24 +44,24 @@ class SubDomainsController extends Controller
 
     public function postAction()
     {
-        $sub_domain = $this->request->getPost("sub-domain", null, null);
+        $subDomain = $this->request->getPost("sub-domain", null, null);
         $userId = $this->request->getPost("user_id", null, null);
         $domainId = $this->request->getPost("domain_id", null, null);
 
-        $subDomain = (new SubDomains())
-            ->setSubdomain($sub_domain)
+        $subDomains = (new SubDomains())
+            ->setSubdomain($subDomain)
             ->setUserId($userId)
             ->setDomainId($domainId);
-        if ($subDomain->create() === false) {
+        if ($subDomains->create() === false) {
             // error, cannot create
             $this->response->setStatusCode(500);
             $data = [
                 'status' => 'error',
                 'code' => 400,
-                'message' => sprintf('Cannot create sub-domain \'%s\'', $sub_domain),
+                'message' => sprintf('Cannot create sub-domain \'%s\'', $subDomain),
                 'details' => []
             ];
-            $messages = $subDomain->getMessages();
+            $messages = $subDomains->getMessages();
             foreach ($messages as $message) {
                 $data['details'][] = $message->getMessage();
             }
@@ -73,7 +73,7 @@ class SubDomainsController extends Controller
         $this->response->setContent(json_encode([
             'status' => 'success',
             'code' => 200,
-            'message' => $subDomain
+            'message' => $subDomains
         ]));
         return $this->response;
     }

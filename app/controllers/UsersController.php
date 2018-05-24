@@ -6,7 +6,7 @@ use Phalcon\Http\Response;
 use Phalcon\Mvc\Controller;
 use ITPocProxy\Model\Users;
 
-class UserController extends Controller
+class UsersController extends Controller
 {
     /** @var Response */
     private $response;

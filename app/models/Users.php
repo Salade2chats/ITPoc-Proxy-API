@@ -7,6 +7,7 @@ use DateTimeZone;
 use Phalcon\Mvc\Model;
 use Phalcon\Security\Exception;
 use Phalcon\Security\Random;
+use Phalcon\Text;
 
 class Users extends Model
 {
@@ -16,12 +17,12 @@ class Users extends Model
     protected $email;
     /** @var string $password */
     protected $password;
-    /** @var string $clear_password */
-    protected $clear_password;
+    /** @var string $clearPassword */
+    protected $clearPassword;
     /** @var string $token */
     protected $token;
-    /** @var DateTime $creation_date */
-    protected $creation_date;
+    /** @var DateTime $creationDate */
+    protected $creationDate;
 
     /**
      * @throws Exception
@@ -34,6 +35,17 @@ class Users extends Model
         if (!$this->getPassword() && $this->getClearPassword()) {
             $this->setPassword($this->encryptPassword($this->getClearPassword()));
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function columnMap()
+    {
+        $columns = $this->getModelsMetaData()->getAttributes($this);
+        $map = [];
+        foreach ($columns as $column) $map[$column] = lcfirst(Text::camelize($column));
+        return $map;
     }
 
     /**
@@ -59,16 +71,16 @@ class Users extends Model
      */
     public function getClearPassword()
     {
-        return $this->clear_password;
+        return $this->clearPassword;
     }
 
     /**
-     * @param string $clear_password
+     * @param string $clearPassword
      * @return Users
      */
-    public function setClearPassword($clear_password)
+    public function setClearPassword($clearPassword)
     {
-        $this->clear_password = $clear_password;
+        $this->clearPassword = $clearPassword;
         return $this;
     }
 
@@ -150,16 +162,16 @@ class Users extends Model
      */
     public function getCreationDate()
     {
-        return $this->creation_date ? new DateTime($this->creation_date) : null;
+        return $this->creationDate ? new DateTime($this->creationDate) : null;
     }
 
     /**
-     * @param DateTime $creation_date
+     * @param DateTime $creationDate
      * @return Users
      */
-    public function setCreationDate(DateTime $creation_date)
+    public function setCreationDate($creationDate)
     {
-        $this->creation_date = $creation_date->format("Y-m-d H:i:sP");
+        $this->creationDate = $creationDate->format("Y-m-d H:i:sP");
         return $this;
     }
 }

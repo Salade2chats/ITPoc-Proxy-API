@@ -1,88 +1,80 @@
 <?php
 use Phalcon\Mvc\Router;
-use ITPocProxy\Controllers\User;
-# use Phalcon\Mvc\Micro\Collection as MicroCollection;
-
-# $users = new MicroCollection();
-# $users->setHandler(new \ITPocProxy\Controller\UserController());
-# $users->setPrefix('/users');
-# $users->get('/{id}', 'get');
-# $users->post('/{payload}', 'create');
 
 $router = new Router();
 
-$router->add("/user/{id}", [
+// Users
+$router->add("/users/{id}", [
     'namespace' => 'ITPocProxy\\Controller',
-    'controller' => 'User',
+    'controller' => 'Users',
     'action' => 'get'
 ])->via(["GET"]);
 
-$router->add("/user", [
+$router->add("/users", [
     'namespace' => 'ITPocProxy\\Controller',
-    'controller' => 'User',
+    'controller' => 'Users',
     'action' => 'post'
 ])->via(["POST"]);
 
-$router->add("/user/{id}", [
+$router->add("/users/{id}", [
     'namespace' => 'ITPocProxy\\Controller',
-    'controller' => 'User',
+    'controller' => 'Users',
     'action' => 'put'
 ])->via(["PUT"]);
 
-$router->add("/user/{id}", [
+$router->add("/users/{id}", [
     'namespace' => 'ITPocProxy\\Controller',
-    'controller' => 'User',
+    'controller' => 'Users',
     'action' => 'delete'
 ])->via(["DELETE"]);
 
-// Domain
-$router->add("/domain/{id}", [
+// Domains
+$router->add("/domains/{id}", [
     'namespace' => 'ITPocProxy\\Controller',
-    'controller' => 'Domain',
+    'controller' => 'Domains',
     'action' => 'get'
 ])->via(["GET"]);
 
-$router->add("/domain", [
+$router->add("/domains", [
     'namespace' => 'ITPocProxy\\Controller',
-    'controller' => 'Domain',
+    'controller' => 'Domains',
     'action' => 'post'
 ])->via(["POST"]);
 
-$router->add("/domain/{id}", [
+$router->add("/domains/{id}", [
     'namespace' => 'ITPocProxy\\Controller',
-    'controller' => 'Domain',
+    'controller' => 'Domains',
     'action' => 'put'
 ])->via(["PUT"]);
 
-$router->add("/domain/{id}", [
+$router->add("/domains/{id}", [
     'namespace' => 'ITPocProxy\\Controller',
-    'controller' => 'Domain',
+    'controller' => 'Domains',
     'action' => 'delete'
 ])->via(["DELETE"]);
 
-
-// SubDomain
-$router->add("/sub-domain/{id}", [
+// SubDomains
+$router->add("/sub-domains/{id}", [
     'namespace' => 'ITPocProxy\\Controller',
-    'controller' => 'SubDomain',
+    'controller' => 'SubDomains',
     'action' => 'get'
 ])->via(["GET"]);
 
-$router->add("/sub-domain", [
+$router->add("/sub-domains", [
     'namespace' => 'ITPocProxy\\Controller',
-    'controller' => 'SubDomain',
+    'controller' => 'SubDomains',
     'action' => 'post'
 ])->via(["POST"]);
 
-$router->add("/sub-domain/{id}", [
+$router->add("/sub-domains/{id}", [
     'namespace' => 'ITPocProxy\\Controller',
-    'controller' => 'SubDomain',
+    'controller' => 'SubDomains',
     'action' => 'put'
 ])->via(["PUT"]);
 
-$router->add("/sub-domain/{id}", [
+$router->add("/sub-domains/{id}", [
     'namespace' => 'ITPocProxy\\Controller',
-    'controller' => 'SubDomain',
+    'controller' => 'SubDomains',
     'action' => 'delete'
 ])->via(["DELETE"]);
 

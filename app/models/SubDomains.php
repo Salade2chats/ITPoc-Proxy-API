@@ -7,6 +7,7 @@ use DateTimeZone;
 use Phalcon\Mvc\Model;
 use Phalcon\Security\Exception;
 use Phalcon\Security\Random;
+use Phalcon\Text;
 
 class SubDomains extends Model
 {
@@ -58,6 +59,17 @@ class SubDomains extends Model
                 'foreignKey' => true
             ]
         );
+    }
+
+    /**
+     * @return array
+     */
+    public function columnMap()
+    {
+        $columns = $this->getModelsMetaData()->getAttributes($this);
+        $map = [];
+        foreach ($columns as $column) $map[$column] = lcfirst(Text::camelize($column));
+        return $map;
     }
 
     /**

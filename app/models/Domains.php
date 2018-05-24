@@ -7,13 +7,14 @@ use DateTimeZone;
 use Phalcon\Mvc\Model;
 use Phalcon\Security\Exception;
 use Phalcon\Security\Random;
+use Phalcon\Text;
 
 class Domains extends Model
 {
     /** @var string $id */
     protected $id;
-    /** @var string $name */
-    protected $name;
+    /** @var string $domain */
+    protected $domain;
     /** @var DateTime $creationDate */
     protected $creationDate;
 
@@ -37,7 +38,18 @@ class Domains extends Model
 
     public function initialize()
     {
-        $this->setSource("domain");
+        $this->setSource("domains");
+    }
+
+    /**
+     * @return array
+     */
+    public function columnMap()
+    {
+        $columns = $this->getModelsMetaData()->getAttributes($this);
+        $map = [];
+        foreach ($columns as $column) $map[$column] = lcfirst(Text::camelize($column));
+        return $map;
     }
 
     /**
@@ -61,18 +73,18 @@ class Domains extends Model
     /**
      * @return string
      */
-    public function getName()
+    public function getDomain()
     {
-        return $this->name;
+        return $this->domain;
     }
 
     /**
-     * @param string $name
+     * @param string $domain
      * @return Domains
      */
-    public function setName($name)
+    public function setDomain($domain)
     {
-        $this->name = $name;
+        $this->domain = $domain;
         return $this;
     }
 
