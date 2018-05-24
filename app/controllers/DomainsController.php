@@ -4,9 +4,9 @@ namespace ITPocProxy\Controller;
 use Phalcon\Db\Column;
 use Phalcon\Http\Response;
 use Phalcon\Mvc\Controller;
-use ITPocProxy\Model\Domain;
+use ITPocProxy\Model\Domains;
 
-class DomainController extends Controller
+class DomainsController extends Controller
 {
     /** @var Response */
     private $response;
@@ -18,7 +18,7 @@ class DomainController extends Controller
 
     public function getAction($id)
     {
-        $domain = Domain::findFirst([
+        $domain = Domains::findFirst([
             'conditions' => 'id = :id:',
             'bind'       => [
                 'id' => $id,
@@ -46,7 +46,7 @@ class DomainController extends Controller
     {
         $name = $this->request->getPost("name", null, null);
 
-        $domain = (new Domain())
+        $domain = (new Domains())
             ->setName($name);
         if ($domain->create() === false) {
             // error, cannot create
@@ -76,7 +76,7 @@ class DomainController extends Controller
 
     public function putAction($id)
     {
-        $domain = Domain::findFirst([
+        $domain = Domains::findFirst([
             'conditions' => 'id = :id:',
             'bind'       => [
                 'id' => $id,
@@ -90,7 +90,7 @@ class DomainController extends Controller
 
     public function deleteAction($id)
     {
-        $domain = Domain::findFirst([
+        $domain = Domains::findFirst([
             'conditions' => 'id = :id:',
             'bind'       => [
                 'id' => $id,

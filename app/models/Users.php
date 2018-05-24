@@ -8,7 +8,7 @@ use Phalcon\Mvc\Model;
 use Phalcon\Security\Exception;
 use Phalcon\Security\Random;
 
-class User extends Model
+class Users extends Model
 {
     /** @var string $id */
     protected $id;
@@ -46,7 +46,7 @@ class User extends Model
 
     /**
      * @param string $password
-     * @return User
+     * @return Users
      */
     public function setPassword($password)
     {
@@ -64,7 +64,7 @@ class User extends Model
 
     /**
      * @param string $clear_password
-     * @return User
+     * @return Users
      */
     public function setClearPassword($clear_password)
     {
@@ -88,7 +88,7 @@ class User extends Model
 
     public function initialize()
     {
-        $this->setSource("user");
+        $this->setSource("users");
     }
 
     /**
@@ -101,7 +101,7 @@ class User extends Model
 
     /**
      * @param string $id
-     * @return User
+     * @return Users
      */
     public function setId($id)
     {
@@ -119,7 +119,7 @@ class User extends Model
 
     /**
      * @param string $email
-     * @return User
+     * @return Users
      */
     public function setEmail($email)
     {
@@ -137,7 +137,7 @@ class User extends Model
 
     /**
      * @param string $token
-     * @return User
+     * @return Users
      */
     public function setToken($token)
     {
@@ -155,7 +155,7 @@ class User extends Model
 
     /**
      * @param DateTime $creation_date
-     * @return User
+     * @return Users
      */
     public function setCreationDate(DateTime $creation_date)
     {

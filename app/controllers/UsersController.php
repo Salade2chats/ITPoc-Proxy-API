@@ -4,9 +4,9 @@ namespace ITPocProxy\Controller;
 use Phalcon\Db\Column;
 use Phalcon\Http\Response;
 use Phalcon\Mvc\Controller;
-use ITPocProxy\Model\SubDomain;
+use ITPocProxy\Model\Users;
 
-class SubDomainController extends Controller
+class UserController extends Controller
 {
     /** @var Response */
     private $response;
@@ -18,7 +18,7 @@ class SubDomainController extends Controller
 
     public function getAction($id)
     {
-        $subDomain = SubDomain::findFirst([
+        $user = Users::findFirst([
             'conditions' => 'id = :id:',
             'bind'       => [
                 'id' => $id,
@@ -27,41 +27,40 @@ class SubDomainController extends Controller
                 Column::BIND_PARAM_STR
             ]
         ]);
-        if (!$subDomain) {
+        if (!$user) {
             $this->response->setStatusCode(404);
             $this->response->setContent(json_encode([
                 'status' => 'error',
                 'code' => 404,
-                'message' => sprintf('Sub-domain \'%s\' not found', $id)
+                'message' => sprintf('User \'%s\' not found', $id)
             ]));
             return $this->response;
         }
 
         $this->response->setStatusCode(200);
-        $this->response->setContent(json_encode($subDomain));
+        $this->response->setContent(json_encode($user));
         return $this->response;
     }
 
     public function postAction()
     {
-        $sub_domain = $this->request->getPost("sub-domain", null, null);
-        $userId = $this->request->getPost("user_id", null, null);
-        $domainId = $this->request->getPost("domain_id", null, null);
+        $email = $this->request->getPost("email", "email", null);
+        $password = $this->request->getPost("password", null, null);
+        $ip = $this->request->getClientAddress();
 
-        $subDomain = (new SubDomain())
-            ->setSubdomain($sub_domain)
-            ->setUserId($userId)
-            ->setDomainId($domainId);
-        if ($subDomain->create() === false) {
+        $user = (new Users())
+            ->setEmail($email)
+            ->setClearPassword($password);
+        if ($user->create() === false) {
             // error, cannot create
             $this->response->setStatusCode(500);
             $data = [
                 'status' => 'error',
-                'code' => 400,
-                'message' => sprintf('Cannot create sub-domain \'%s\'', $sub_domain),
+                'code' => 500,
+                'message' => sprintf('Cannot create user \'%s\'', $email),
                 'details' => []
             ];
-            $messages = $subDomain->getMessages();
+            $messages = $user->getMessages();
             foreach ($messages as $message) {
                 $data['details'][] = $message->getMessage();
             }
@@ -73,14 +72,14 @@ class SubDomainController extends Controller
         $this->response->setContent(json_encode([
             'status' => 'success',
             'code' => 200,
-            'message' => $subDomain
+            'message' => $user
         ]));
         return $this->response;
     }
 
     public function putAction($id)
     {
-        $subDomain = SubDomain::findFirst([
+        $user = Users::findFirst([
             'conditions' => 'id = :id:',
             'bind'       => [
                 'id' => $id,
@@ -89,12 +88,12 @@ class SubDomainController extends Controller
                 Column::BIND_PARAM_STR
             ]
         ]);
-        return $subDomain;
+        return $user;
     }
 
     public function deleteAction($id)
     {
-        $subDomain = SubDomain::findFirst([
+        $user = Users::findFirst([
             'conditions' => 'id = :id:',
             'bind'       => [
                 'id' => $id,
@@ -103,26 +102,26 @@ class SubDomainController extends Controller
                 Column::BIND_PARAM_STR
             ]
         ]);
-        if (!$subDomain) {
-            // error, no sub-domain
+        if (!$user) {
+            // error, no user
             $this->response->setStatusCode(404);
             $this->response->setContent(json_encode([
                 'status' => 'error',
                 'code' => 404,
-                'message' => sprintf('Sub-domain \'%s\' not found', $id)
+                'message' => sprintf('User \'%s\' not found', $id)
             ]));
             return $this->response;
         }
-        if ($subDomain->delete() === false) {
+        if ($user->delete() === false) {
             // error, cannot delete
-            $this->response->setStatusCode(500);
+            $this->response->setStatusCode(400);
             $data = [
                 'status' => 'error',
-                'code' => 500,
-                'message' => sprintf('Cannot delete sub-domain \'%s\'', $id),
+                'code' => 400,
+                'message' => sprintf('Cannot delete user \'%s\'', $id),
                 'details' => []
             ];
-            $messages = $subDomain->getMessages();
+            $messages = $user->getMessages();
             foreach ($messages as $message) {
                 $data['details'][] = $message->getMessage();
             }
@@ -134,7 +133,7 @@ class SubDomainController extends Controller
         $this->response->setContent(json_encode([
             'status' => 'success',
             'code' => 200,
-            'message' => sprintf('Sub-domain \'%s\' deleted', $id)
+            'message' => sprintf('User \'%s\' deleted', $id)
         ]));
         return $this->response;
     }

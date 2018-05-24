@@ -8,18 +8,18 @@ use Phalcon\Mvc\Model;
 use Phalcon\Security\Exception;
 use Phalcon\Security\Random;
 
-class SubDomain extends Model
+class SubDomains extends Model
 {
     /** @var string $id */
     protected $id;
-    /** @var string $subdomain */
-    protected $subdomain;
-    /** @var string $user_id */
-    protected $user_id;
-    /** @var string $domain_id */
-    protected $domain_id;
-    /** @var DateTime $creation_date */
-    protected $creation_date;
+    /** @var string $subDomain */
+    protected $subDomain;
+    /** @var string $userId */
+    protected $userId;
+    /** @var string $domainId */
+    protected $domainId;
+    /** @var DateTime $creationDate */
+    protected $creationDate;
 
     /**
      * @throws Exception
@@ -41,18 +41,18 @@ class SubDomain extends Model
 
     public function initialize()
     {
-        $this->setSource("user_domain");
+        $this->setSource("sub_domains");
         $this->belongsTo(
-            'user_id',
-            User::class,
+            'userId',
+            Users::class,
             'id',
             [
                 'foreignKey' => true
             ]
         );
         $this->belongsTo(
-            'domain_id',
-            Domain::class,
+            'domainId',
+            Domains::class,
             'id',
             [
                 'foreignKey' => true
@@ -70,7 +70,7 @@ class SubDomain extends Model
 
     /**
      * @param string $id
-     * @return SubDomain
+     * @return SubDomains
      */
     public function setId($id)
     {
@@ -81,18 +81,18 @@ class SubDomain extends Model
     /**
      * @return string
      */
-    public function getSubdomain()
+    public function getSubDomain()
     {
-        return $this->subdomain;
+        return $this->subDomain;
     }
 
     /**
-     * @param string $subdomain
-     * @return SubDomain
+     * @param string $subDomain
+     * @return SubDomains
      */
-    public function setSubdomain($subdomain)
+    public function setSubDomain($subDomain)
     {
-        $this->subdomain = $subdomain;
+        $this->subDomain = $subDomain;
         return $this;
     }
 
@@ -101,16 +101,16 @@ class SubDomain extends Model
      */
     public function getUserId()
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
     /**
-     * @param string $user_id
-     * @return SubDomain
+     * @param string $userId
+     * @return SubDomains
      */
-    public function setUserId($user_id)
+    public function setUserId($userId)
     {
-        $this->user_id = $user_id;
+        $this->userId = $userId;
         return $this;
     }
 
@@ -119,16 +119,16 @@ class SubDomain extends Model
      */
     public function getDomainId()
     {
-        return $this->domain_id;
+        return $this->domainId;
     }
 
     /**
-     * @param string $domain_id
-     * @return SubDomain
+     * @param string $domainId
+     * @return SubDomains
      */
-    public function setDomainId($domain_id)
+    public function setDomainId($domainId)
     {
-        $this->domain_id = $domain_id;
+        $this->domainId = $domainId;
         return $this;
     }
 
@@ -137,16 +137,16 @@ class SubDomain extends Model
      */
     public function getCreationDate()
     {
-        return $this->creation_date ? new DateTime($this->creation_date) : null;
+        return $this->creationDate ? new DateTime($this->creationDate) : null;
     }
 
     /**
-     * @param DateTime $creation_date
-     * @return Domain
+     * @param DateTime $creationDate
+     * @return SubDomains
      */
-    public function setCreationDate(DateTime $creation_date)
+    public function setCreationDate(DateTime $creationDate)
     {
-        $this->creation_date = $creation_date->format("Y-m-d H:i:sP");
+        $this->creationDate = $creationDate->format("Y-m-d H:i:sP");
         return $this;
     }
 }

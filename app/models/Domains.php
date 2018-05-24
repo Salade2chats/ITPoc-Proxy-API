@@ -8,14 +8,14 @@ use Phalcon\Mvc\Model;
 use Phalcon\Security\Exception;
 use Phalcon\Security\Random;
 
-class Domain extends Model
+class Domains extends Model
 {
     /** @var string $id */
     protected $id;
     /** @var string $name */
     protected $name;
-    /** @var DateTime $creation_date */
-    protected $creation_date;
+    /** @var DateTime $creationDate */
+    protected $creationDate;
 
     /**
      * @throws Exception
@@ -50,7 +50,7 @@ class Domain extends Model
 
     /**
      * @param string $id
-     * @return Domain
+     * @return Domains
      */
     public function setId($id)
     {
@@ -68,7 +68,7 @@ class Domain extends Model
 
     /**
      * @param string $name
-     * @return Domain
+     * @return Domains
      */
     public function setName($name)
     {
@@ -81,16 +81,16 @@ class Domain extends Model
      */
     public function getCreationDate()
     {
-        return $this->creation_date ? new DateTime($this->creation_date) : null;
+        return $this->creationDate ? new DateTime($this->creationDate) : null;
     }
 
     /**
-     * @param DateTime $creation_date
-     * @return Domain
+     * @param DateTime $creationDate
+     * @return Domains
      */
-    public function setCreationDate(DateTime $creation_date)
+    public function setCreationDate(DateTime $creationDate)
     {
-        $this->creation_date = $creation_date->format("Y-m-d H:i:sP");
+        $this->creationDate = $creationDate->format("Y-m-d H:i:sP");
         return $this;
     }
 }
