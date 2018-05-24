@@ -1,40 +1,45 @@
-version: '3'
+version: '3.6'
 services:
-    postgres:
-        image: "postgres:10.3-alpine"
-        restart: unless-stopped
-        environment:
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: postgrespass
-            PGDATA: /data/postgres
-        volumes:
-            - /home/damien/project/postgres_data:/data/postgres
-        ports:
-            - "127.0.0.1:5440:5432"
-        expose:
-            - 5432
-        networks:
-            - itpoc_proxy
-            - itpoc_proxy_external
-    app:
-        build: docker
-        restart: always
-        working_dir: /project
-        ports:
-            - "127.0.0.1:9001:9000"
-        volumes:
-            - .:/project
-        depends_on:
-            - postgres
-        networks:
-            - itpoc_proxy
-            - itpoc_proxy_external
-        links:
-            - "postgres:database"
+  postgres:
+    container_name: itpoc_api_db
+    image: "postgres:10.3-alpine"
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/data/postgres
+    ports:
+      - "127.0.0.1:5440:5432"
+    expose:
+      - 5432
+    networks:
+      - itpoc_proxy
+      - itpoc_proxy_external
+  app:
+    container_name: itpoc_api
+    build:
+      context: docker
+      labels:
+        io.itpoc.api.description: "ITPoc API"
+        io.itpoc.api.authors: "Damien JARRY <damien.jarry@salade2chats.com>"
+    restart: always
+    working_dir: /project
+    ports:
+      - "127.0.0.1:9001:9000"
+    volumes:
+      - .:/project
+    depends_on:
+      - postgres
+    networks:
+      - itpoc_proxy
+      - itpoc_proxy_external
+    links:
+      - "postgres:database"
 networks:
-    itpoc_proxy:
-        internal: true
-        driver: bridge
-    itpoc_proxy_external:
-        driver: bridge
-
+  itpoc_proxy:
+    internal: true
+    driver: bridge
+  itpoc_proxy_external:
+    driver: bridge
+volumes:
+  postgres-data:
+    name: ${PGDATA}
+    external: false
